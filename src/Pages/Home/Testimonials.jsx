@@ -1,72 +1,144 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-
-import { FaQuoteLeft } from "react-icons/fa";
-import Helmet from 'react-helmet';
+import { useState, useEffect } from "react";
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonialsData = [
-    {
-        id: 1,
-        name: "John Doe",
-        title: "CEO, Company ABC",
-        image: "https://i.ibb.co/mDVdJbx/agent2.png",
-        testimonial: "This service is fantastic! It has helped us tremendously in managing our tasks more efficiently."
-    },
-    {
-        id: 2,
-        name: "Jane Smith",
-        title: "CTO, Company XYZ",
-        image: "https://i.ibb.co/Twk7pxJ/agent3.png",
-        testimonial: "An amazing experience! The customer support is top-notch and the platform is very user-friendly."
-    },
-    {
-        id: 3,
-        name: "Mark Johnson",
-        title: "Manager, Company 123",
-        image: "https://i.ibb.co/cbywGjh/Fakhrul-Islam-removebg-preview.png",
-        testimonial: "Highly recommend this service to anyone looking to streamline their workflow and improve productivity."
-    }
+  {
+    id: 1,
+    name: "John Doe",
+    title: "CEO, Company ABC",
+    avatar: "JD",
+    testimonial:
+      "This service is fantastic! It has helped us tremendously in managing our tasks more efficiently.",
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    title: "CTO, Company XYZ",
+    avatar: "JS",
+    testimonial:
+      "An amazing experience! The customer support is top-notch and the platform is very user-friendly.",
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: "Mark Johnson",
+    title: "Manager, Company 123",
+    avatar: "MJ",
+    testimonial:
+      "Highly recommend this service to anyone looking to streamline their workflow and improve productivity.",
+    rating: 5,
+  },
 ];
 
 const Testimonials = () => {
-    return (
-        <section className="py-12">
-            
-            <div className="container mx-auto px-4">
-                <h1 className="text-3xl font-bold text-center mb-8">Testimonials</h1>
-                <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg relative">
-                    <FaQuoteLeft className="text-5xl text-gray-200 absolute top-4 left-4" />
-                    <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={30}
-                        slidesPerView={1}
-                        navigation
-                        pagination={{ clickable: true }}
-                    >
-                        {testimonialsData.map((item) => (
-                            <SwiperSlide key={item.id}>
-                                <div className="flex flex-col md:flex-row items-center gap-6">
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        className="w-24 h-24 rounded-full object-cover"
-                                    />
-                                    <div>
-                                        <p className="text-gray-700 italic mb-4">
-                                            "{item.testimonial}"
-                                        </p>
-                                        <h3 className="text-xl font-semibold">{item.name}</h3>
-                                        <p className="text-gray-500">{item.title}</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
-            </div>
-        </section>
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % testimonialsData.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % testimonialsData.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(
+      (prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length
     );
+  };
+
+  const currentTestimonial = testimonialsData[currentSlide];
+
+  return (
+    <section className="py-24 bg-slate-50">
+      <div className="max-w-4xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4">
+            <span className="text-slate-800">What Our </span>
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Clients Say
+            </span>
+          </h2>
+          <p className="text-slate-600 text-lg">
+            Real feedback from our valued community
+          </p>
+        </div>
+
+        {/* Testimonial Card */}
+        <div className="relative bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-slate-200">
+          {/* Quote Icon */}
+          <div className="absolute top-6 left-6 opacity-10">
+            <Quote className="w-16 h-16 text-blue-500" />
+          </div>
+
+          <div className="relative z-10">
+            {/* Rating */}
+            <div className="flex justify-center mb-6">
+              {[...Array(currentTestimonial.rating)].map((_, i) => (
+                <Star
+                  key={i}
+                  className="w-5 h-5 text-yellow-400 fill-current"
+                />
+              ))}
+            </div>
+
+            {/* Testimonial Text */}
+            <blockquote className="text-xl md:text-2xl text-slate-700 text-center mb-8 leading-relaxed">
+              &ldquo;{currentTestimonial.testimonial}&rdquo;
+            </blockquote>
+
+            {/* Author */}
+            <div className="flex items-center justify-center space-x-4">
+              <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                {currentTestimonial.avatar}
+              </div>
+              <div className="text-center">
+                <h4 className="font-semibold text-slate-900 text-lg">
+                  {currentTestimonial.name}
+                </h4>
+                <p className="text-slate-500">{currentTestimonial.title}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex items-center justify-between mt-8">
+            <button
+              onClick={prevSlide}
+              className="p-3 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5 text-slate-600" />
+            </button>
+
+            {/* Dots */}
+            <div className="flex space-x-2">
+              {testimonialsData.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentSlide ? "bg-blue-600" : "bg-slate-300"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={nextSlide}
+              className="p-3 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+            >
+              <ChevronRight className="w-5 h-5 text-slate-600" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Testimonials;
