@@ -1,6 +1,7 @@
 # Micro Task 2.0
 
 A micro-task and earning platform, rebuilt with a modern stack. The original v1 code is preserved in this repository's earlier commits; the API is also published on its own in [tazim5032/micro-task-api](https://github.com/tazim5032/micro-task-api).
+
 **Live demo:** https://tazim-micro-task.netlify.app (runs fully in your browser; use the demo login buttons, and reset the data from the footer)
 
 **Front end:** React 18, TypeScript, Vite, Tailwind CSS, React Router
