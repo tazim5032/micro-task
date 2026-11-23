@@ -1,0 +1,17 @@
+{
+  "name": "micro-task",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Micro Task: a micro-task and earning platform with worker, task creator and admin roles.",
+  "scripts": {
+    "setup": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently -n api,web -c gray,blue \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix client run build",
+    "typecheck": "npm --prefix server run typecheck && npm --prefix client run typecheck",
+    "reset-data": "npm --prefix server run reset",
+    "build:demo": "npm --prefix client run build:demo"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
