@@ -1,6 +1,6 @@
 # Micro Task 2.0
 
-A micro-task and earning platform, rebuilt from the original [pico-worker-client](https://github.com/tazim5032/pico-worker-client) / [micro-work-server](https://github.com/tazim5032/micro-work-server) with a modern stack.
+A micro-task and earning platform, rebuilt with a modern stack. The original v1 code is preserved in this repository's earlier commits; the API is also published on its own in [tazim5032/micro-task-api](https://github.com/tazim5032/micro-task-api).
 
 **Front end:** React 18, TypeScript, Vite, Tailwind CSS, React Router
 **Back end:** Express, TypeScript, Zod validation, JWT auth, bcrypt; JSON-file database (no setup needed)
